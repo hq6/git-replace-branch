@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$#" -ne 3 ]; then
+    echo "Usage:  commit-outside <top level directory> <branchname> <commit message>"
+    exit
+fi
+
 # First check if the index is polluted, since we will be using it.
 indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
 if [[ -n "$indexDiverges" ]]; then
@@ -7,6 +12,15 @@ if [[ -n "$indexDiverges" ]]; then
     exit
 fi
 
+# Create a new tree
+git read-tree --empty
+git status
+
+# Add the new three to the index.
+
+# Commit with the given commit message to the other branch
+
+# Move the branch pointer.
+
 # Restore the index to its previous state
-# How do we get from a commit object to a tree object that it refers to?
 git read-tree HEAD
