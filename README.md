@@ -11,4 +11,9 @@ multiple clones.
 The tool is entirely encapsulated in the file `git-replace-branch`, and the
 purpose of this repository to merely to demonstrate its use.
 
+Here is an example usage, using this repository. It assumes that there already
+exists a local branch which tracks the correct remote branch.
 
+    ./CreateContent.sh
+    ./git-replace-branch Website gh-pages "Updating our website"
+    git push origin gh-pages
