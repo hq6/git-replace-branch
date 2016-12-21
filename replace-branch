@@ -13,12 +13,10 @@ branch="$2"
 msg="$3"
 
 # First check if the index is polluted, since we will be using it.
+save=HEAD
 indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
 if [[ -n "$indexDiverges" ]]; then
-    echo \
-    "Command would overwrite the index. Please commit or stash your changes"\
-    "before attempting to commit to another branch!"
-    exit
+    save=$(git write-tree)
 fi
 
 # Create a new index
@@ -29,7 +27,7 @@ GIT_WORK_TREE=$root git add .
 isDuplicateCommit=$(git diff-index --cached  $(git rev-parse $branch))
 if [[ ! -n "$isDuplicateCommit" ]]; then
     echo "The branch already matches the state we are trying to commit!"
-    git read-tree HEAD
+    git read-tree $save
     exit
 fi
 
@@ -44,4 +42,4 @@ git update-ref $(git show-ref --heads "$branch"  | awk '{print $2}') \
     "$commithash"
 
 # Restore the index to its previous state
-git read-tree HEAD
+git read-tree $save
