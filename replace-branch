@@ -25,6 +25,14 @@ fi
 git read-tree --empty
 GIT_WORK_TREE=$root git add .
 
+# Check whether the index is actually different from the target.
+isDuplicateCommit=$(git diff-index --cached  $(git rev-parse $branch))
+if [[ ! -n "$isDuplicateCommit" ]]; then
+    echo "The branch already matches the state we are trying to commit!"
+    git read-tree HEAD
+    exit
+fi
+
 # Write the index out to a new tree
 tree=$(git write-tree)
 
