@@ -1,0 +1,3 @@
+# Ignore the website directory which is generated and should not be part of the
+# master branch.
+Website
