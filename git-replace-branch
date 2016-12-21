@@ -12,6 +12,16 @@ root="$1"
 branch="$2"
 msg="$3"
 
+# Check if the branch that we are committing to is the current branch and abort
+# if it is, since this violates our desired property that the index state is
+# exactly the same before and after the script runs.
+if [[ "$branch" == "$(git rev-parse --abbrev-ref HEAD)" ]];
+then
+    echo "Branch name given is current. Please use an ordinary git-commit" \
+         "to handle this case."
+    exit
+fi
+
 # First check if the index is polluted, since we will be using it.
 save=HEAD
 indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
