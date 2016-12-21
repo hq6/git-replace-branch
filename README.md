@@ -16,7 +16,14 @@ exists a local branch which tracks the correct remote branch.
 
     ./CreateContent.sh
     ./git-replace-branch Website gh-pages "Updating our website"
+
+    # This part of the example will not work unless you fork my repository, but
+    # it is illustrative for how you might write a script which leverages
+    # git-replace-branch.
     git push origin gh-pages
 
 Incidentally, the sample website associated with this repo is available
-[here](https://hq6.github.io/git-replace-branch/).
+[here](https://hq6.github.io/git-replace-branch/). For more information about
+the URL's associated with user repositories,
+[this](https://help.github.com/articles/user-organization-and-project-pages/)
+is a convenience reference.
