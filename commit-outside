@@ -1,0 +1,7 @@
+#!/bin/bash
+
+indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
+if [[ -n "$indexDiverges" ]]; then
+    echo "Command would overwrite the index. Please commit or stash your changes before attempting to commit to another branch!"
+    exit
+fi
