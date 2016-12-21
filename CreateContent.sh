@@ -1,3 +1,2 @@
-rm -rf FooBarDir
-mkdir FooBarDir
-echo "FooBar" > FooBarDir/Foo.bar
+mkdir FooBarDir  2> /dev/null
+echo "FooBar" >> FooBarDir/Foo.bar
