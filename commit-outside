@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# First check if the index is polluted, since we will be using it.
 indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
 if [[ -n "$indexDiverges" ]]; then
     echo "Command would overwrite the index. Please commit or stash your changes before attempting to commit to another branch!"
     exit
 fi
+
+# Restore the index to its previous state
+# How do we get from a commit object to a tree object that it refers to?
+git read-tree HEAD
