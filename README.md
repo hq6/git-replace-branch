@@ -17,3 +17,6 @@ exists a local branch which tracks the correct remote branch.
     ./CreateContent.sh
     ./git-replace-branch Website gh-pages "Updating our website"
     git push origin gh-pages
+
+Incidentally, the sample website associated with this repo is available
+[here](https://hq6.github.io/git-replace-branch/).
