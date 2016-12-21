@@ -4,7 +4,7 @@
 # branch with it.
 if [ "$#" -ne 3 ]; then
     echo \
-    "Usage:  commit-outside <top level directory> <branchname> <commit message>"
+    "Usage:  replace-branch <top level directory> <branchname> <commit message>"
     exit
 fi
 
