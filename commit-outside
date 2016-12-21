@@ -1,26 +1,40 @@
 #!/bin/bash
 
+# This script will take a directory and replace the contents of a non-current
+# branch with it.
 if [ "$#" -ne 3 ]; then
-    echo "Usage:  commit-outside <top level directory> <branchname> <commit message>"
+    echo \
+    "Usage:  commit-outside <top level directory> <branchname> <commit message>"
     exit
 fi
+
+root="$1"
+branch="$2"
+msg="$3"
 
 # First check if the index is polluted, since we will be using it.
 indexDiverges=$(git diff-index --cached  $(git rev-parse HEAD))
 if [[ -n "$indexDiverges" ]]; then
-    echo "Command would overwrite the index. Please commit or stash your changes before attempting to commit to another branch!"
+    echo \
+    "Command would overwrite the index. Please commit or stash your changes"\
+    "before attempting to commit to another branch!"
     exit
 fi
 
-# Create a new tree
+# Create a new index
 git read-tree --empty
-git status
+GIT_WORK_TREE=$root git add .
 
-# Add the new three to the index.
+# Write the index out to a new tree
+tree=$(git write-tree)
+echo $tree
 
 # Commit with the given commit message to the other branch
+commithash=$(echo "$msg" | git commit-tree $tree -p $(git rev-parse $branch))
 
 # Move the branch pointer.
+git update-ref $(git show-ref --heads "$branch"  | awk '{print $2}') \
+    "$commithash"
 
 # Restore the index to its previous state
 git read-tree HEAD
