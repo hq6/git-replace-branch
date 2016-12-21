@@ -27,7 +27,6 @@ GIT_WORK_TREE=$root git add .
 
 # Write the index out to a new tree
 tree=$(git write-tree)
-echo $tree
 
 # Commit with the given commit message to the other branch
 commithash=$(echo "$msg" | git commit-tree $tree -p $(git rev-parse $branch))
